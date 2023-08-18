@@ -12,13 +12,10 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	yaml "gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v2"
 )
 
 func main() {
-	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, os.Interrupt)
-
 	// 读取配置文件
 	configFile, err := ioutil.ReadFile("config.yml")
 	if err != nil {
@@ -30,6 +27,12 @@ func main() {
 	if err != nil {
 		log.Fatal("无法解析配置文件:", err)
 	}
+
+	//server.Init(&config)
+	//return
+
+	interrupt := make(chan os.Signal, 1)
+	signal.Notify(interrupt, os.Interrupt)
 
 	u := url.URL{
 		Scheme: "ws",
@@ -48,7 +51,7 @@ func main() {
 	// 构建授权信息
 	authMessage := model.AuthMessage{
 		Type:        "auth",
-		AccessToken: config.Token, // 替换为实际的访问令牌
+		AccessToken: config.HomeAssistant.Token, // 替换为实际的访问令牌
 	}
 
 	// 将授权信息转换为JSON格式
