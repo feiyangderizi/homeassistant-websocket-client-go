@@ -1,0 +1,6 @@
+homeassistant:
+  ip: 127.0.0.1
+  port: 8123
+  path: /api/websocket
+
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1MWVjNGYyZjMzZmY0YjljYmY4ODllYmVhNGE1NTZkZSIsImlhdCI6MTY5MjE5MjA2NSwiZXhwIjoyMDA3NTUyMDY1fQ.N_Is-gg6j23LbDzBg_r1av10XsaaB0gvxagjGGvOMCI
