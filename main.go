@@ -15,6 +15,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+//参考文档：//模式定义参考文档：https://developers.home-assistant.io/docs/api/websocket
+
 func main() {
 	// 读取配置文件
 	configFile, err := ioutil.ReadFile("config.yml")
@@ -65,6 +67,23 @@ func main() {
 	err = c.WriteMessage(websocket.TextMessage, authJSON)
 	if err != nil {
 		log.Fatal("发送授权信息错误:", err)
+	}
+
+	subscribeEventMessage := model.SubscribeEventMessage{
+		Id:        18,
+		Type:      "subscribe_events",
+		EventType: "state_changed",
+	}
+	// 将授权信息转换为JSON格式
+	subscribeJSON, err := json.Marshal(subscribeEventMessage)
+	if err != nil {
+		log.Fatal("JSON转换错误:", err)
+	}
+
+	// 发送订阅信息
+	err = c.WriteMessage(websocket.TextMessage, subscribeJSON)
+	if err != nil {
+		log.Fatal("发送订阅信息错误:", err)
 	}
 
 	done := make(chan struct{})
